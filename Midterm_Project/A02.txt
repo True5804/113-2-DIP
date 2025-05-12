@@ -1,0 +1,16 @@
+Image: 02.jpg
+Is Grayscale: false
+Noise Types Detected: salt & pepper, gaussian
+Blur Type Detected: gaussian
+Overexposure Detected: false
+
+Original Size: 1200x675, Depth = 3
+Original Sharpness (Laplacian Variance): 16281.93
+Processed Sharpness (Laplacian Variance): 46.63
+Original Contrast (Intensity Std): 50.20
+Processed Contrast (Intensity Std): 40.68
+
+Filters Applied: Median Filter (5x5), Mean Filter (5x5)
+Deblur Method: deconvwnr
+Gamma Correction: None
+Inpainted Small Regions: 0

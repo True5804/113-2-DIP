@@ -1,0 +1,16 @@
+Image: 03.jpg
+Is Grayscale: true
+Noise Types Detected: gaussian
+Blur Type Detected: gaussian
+Overexposure Detected: false
+
+Original Size: 400x294, Depth = 3
+Original Sharpness (Laplacian Variance): 10756.41
+Processed Sharpness (Laplacian Variance): 536.38
+Original Contrast (Intensity Std): 66.76
+Processed Contrast (Intensity Std): 57.88
+
+Filters Applied: Mean Filter (5x5)
+Deblur Method: deconvwnr
+Gamma Correction: None
+Inpainted Small Regions: 166

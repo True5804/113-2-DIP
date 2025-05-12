@@ -1,0 +1,11 @@
+Image: 04.png
+Noise Type Detected: salt & pepper
+Filter Applied: Median Filter
+Original Size: 512x512, Depth: 3
+Mean Intensity: 108.01
+Standard Deviation: 60.32
+Bright Area Std: 30.39
+Dark Area Std: 20.23
+Histogram Variance: 847.67
+Black Pixel Ratio: 0.0500
+White Pixel Ratio: 0.0496
