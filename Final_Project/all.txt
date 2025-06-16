@@ -1,0 +1,1472 @@
+% 2025/03/03 DIP Homework
+
+clear all; % clean all memory
+close all; % close all opened figures
+
+RGB=imread("handwrite01.jpg");
+figure;
+subplot(1,2,1);
+imshow(RGB);
+title('Original');
+
+% mapping RGB color to grayscale
+Gray = rgb2gray(RGB);
+rgb_adjusted = imadjust(Gray, stretchlim(Gray, [0.02, 0.98]), []);
+black_img = im2bw(rgb_adjusted, 0.3);
+
+subplot(1,2,2);
+imshow(black_img);
+title("Adjusted");
+
+% write images into another new file
+imwrite(black_img, 'S11159020_01.jpg');
+
+% 2025/03/03 DIP Homework
+
+clear all; % clean all memory
+close all; % close all opened figures
+
+RGB=imread("handwrite02.jpg");
+figure;
+subplot(1,2,1);
+imshow(RGB);
+title('Original');
+
+% mapping RGB color to grayscale
+Gray = rgb2gray(RGB);
+rgb_adjusted = imadjust(Gray, stretchlim(Gray, [0.02, 0.9]), []);
+black_img = im2bw(rgb_adjusted, 0.45);
+
+subplot(1,2,2);
+imshow(black_img);
+title("Adjusted");
+
+% write images into another new file
+imwrite(black_img, 'S11159020_02.jpg');
+
+% 2025/03/03 DIP Homework
+
+clear all; % clean all memory
+close all; % close all opened figures
+
+RGB=imread("handwrite03.jpg");
+figure;
+subplot(1,2,1);
+imshow(RGB);
+title('Original');
+
+% mapping RGB color to grayscale
+Gray = rgb2gray(RGB);
+rgb_adjusted = imadjust(Gray, stretchlim(Gray, [0.02, 0.85]), []);
+black_img = im2bw(rgb_adjusted, 0.5);
+
+subplot(1,2,2);
+imshow(black_img);
+title("Adjusted");
+
+% write images into another new file
+imwrite(black_img, 'S11159020_03.jpg');
+
+
+clc;
+clear all;
+close all;
+
+I = imread('a.jpeg');
+%figure; imshow(I); title('Original Pic');
+
+% 提取並顯示各色彩通道
+redChannel = I(:,:,1);
+greenChannel = I(:,:,2);
+blueChannel = I(:,:,3);
+
+% 創建只有紅色通道的RGB圖像
+blueOnly = zeros(size(I), 'uint8');
+blueOnly(:,:,1) = blueChannel; % 只填充紅色通道
+
+% 針對紅色通道偏暗的問題進行增強
+enhancedBlue = imadjust(blueChannel, [0 1], [0.2 1]); % 增強紅色通道
+
+% 創建增強後的彩色圖像
+enhancedImg = I;
+enhancedImg(:,:,1) = enhancedBlue; % 替換為增強後的紅色通道
+
+% 顯示增強效果
+figure;
+subplot(1,3,1); imshow(I); title('原始圖像');
+subplot(1,3,2); imshow(blueOnly); title('紅色通道');
+subplot(1,3,3); imshow(enhancedBlue); title('紅色通道增強後');
+
+
+% show histogram by imhist()
+clc;
+clear all;
+close all;
+
+I = imread('pout.tif');
+imhist(I);
+figure;
+subplot(1,2,1);
+histogram(I);
+title('Histogram');
+subplot(1,2,2);
+imhist(I);
+title('imhist');
+
+% different image with diff. histogram
+uniform = ones(100)*128;
+gradient = repmat(linspace(0,255,100)',1,100);
+natural = imread('cameraman.tif');
+
+figure;
+subplot(3,2,1); imshow(uint8(uniform)); title('均勻灰色');
+subplot(3,2,2); imhist(uint8(uniform)); title('均勻灰色直方圖');
+subplot(3,2,3); imshow(uint8(gradient)); title('簡單漸變');
+subplot(3,2,4); imhist(uint8(gradient)); title('漸變直方圖');
+subplot(3,2,5); imshow(natural); title('自然圖像');
+subplot(3,2,6); imhist(natural); title('自然圖像直方圖');
+
+
+clc;
+clear all;
+close all;
+
+dark = imread('pout.tif');
+bright = 255-dark; % 利用反轉的效果來獲得比較亮的圖片 
+% imadjust 
+low_contrast = imadjust(dark,[0.2 0.8],[0.2 0.8]);
+high_contrast = imadjust(dark,[0.2 0.8],[0 1]);
+
+figure;
+subplot(1,2,1); imshow(dark); title('暗圖像');
+subplot(1,2,2); imhist(dark); title('暗圖像直方圖');
+figure;
+subplot(1,2,1); imshow(bright); title('亮圖像');
+subplot(1,2,2); imhist(bright); title('亮圖像直方圖');
+figure;
+subplot(1,2,1); imshow(low_contrast); title('低對比度');
+subplot(1,2,2); imhist(low_contrast); title('低對比度直方圖');
+figure;
+subplot(1,2,1); imshow(high_contrast); title('高對比度');
+subplot(1,2,2); imhist(high_contrast); title('高對比度直方圖');
+
+% catch RGB channel
+
+clc;
+clear All;
+close All;
+I = imread('6.png'); % 讀取彩色影像
+figure;
+imshow(I);
+R = I(:,:,1); G = I(:,:,2); B = I(:,:,3); % 拆分 RGB 通道 
+figure;
+subplot(3,1,1), imhist(R); title('紅色通道'); 
+subplot(3,1,2), imhist(G); title('綠色通道'); 
+subplot(3,1,3), imhist(B); title('藍色通道');
+
+%load color image and process it
+clc;
+clear All;
+close All;
+
+colorImg = imread('6.png');
+figure;
+imshow(colorImg); title('彩色原圖');
+
+% 提取並顯示各色彩通道
+redChannel = colorImg(:,:,1);
+greenChannel = colorImg(:,:,2);
+blueChannel = colorImg(:,:,3);
+
+% 創建只有紅色通道的RGB圖像
+redOnly = zeros(size(colorImg), 'uint8');
+redOnly(:,:,1) = redChannel; % 只填充紅色通道
+
+% 針對紅色通道偏暗的問題進行增強
+enhancedRed = imadjust(redChannel, [0 1], [0.2 1]); % 增強紅色通道
+
+% 創建增強後的彩色圖像
+enhancedImg = colorImg;
+enhancedImg(:,:,1) = enhancedRed; % 替換為增強後的紅色通道
+
+% 顯示增強效果
+figure;
+subplot(1,3,1); imshow(colorImg); title('原始圖像');
+subplot(1,3,2); imshow(redOnly); title('紅色通道');
+subplot(1,3,3); imshow(enhancedImg); title('紅色通道增強後');
+
+% 顯示增強前後的紅色通道直方圖比較
+figure;
+subplot(1,2,1); imhist(redChannel); title('原始紅色通道直方圖');
+subplot(1,2,2); imhist(enhancedRed); title('增強後紅色通道直方圖');
+
+%histogram equalization
+clc;
+clear All;
+close All;
+I = imread('pout.tif');
+%figure; imshow(I); title('Original Pic');
+
+% applying histogram equalization 
+h = histeq(I);
+figure;
+subplot(1,4,1), imshow(I);title('Original Pic');
+subplot(1,4,2), imhist(I);title('Original Hist');
+subplot(1,4,3), imshow(h);title('Equalization Pic');
+subplot(1,4,4), imhist(h);title('Equalization Hist');
+
+%load pic
+original_image=imread('orange.jpg');
+
+% check whether color or gray
+if size(original_image, 3) == 3
+    gray_image = rgb2gray(original_image);
+else
+    gray_image = original_image;
+end
+
+% file is uint 8 ->255 2^8=256 -1
+% file is unit 16
+negative_image = 255-gray_image;
+
+
+% 顯示結果
+figure;
+subplot(1,3,1), imshow(original_image), title('原始影像');
+subplot(1,3,2), imshow(gray_image), title('灰階影像');
+subplot(1,3,3), imshow(negative_image), title('負片效果');
+
+clc;
+clear All;
+close All;
+
+%read original image
+original_image = imread('orange.jpg');
+
+% 如果是彩色影像，先轉為灰度
+if size(original_image, 3) == 3
+    gray_image = rgb2gray(original_image);
+else
+    gray_image = original_image;
+end
+% 設定 threshold
+threshold = 180;
+
+binary_image = gray_image >= threshold  % 128-255 
+% 顯示結果
+figure;
+subplot(1,3,1), imshow(original_image), title('原始影像');
+subplot(1,3,2), imshow(gray_image), title('灰階影像');
+subplot(1,3,3), imshow(binary_image), title('閥值效果');
+
+%point bright
+clc;
+clear All;
+close All;
+
+%read original image
+original_image = imread('orange.jpg');
+
+Pbrightness = 50;
+Nbrightness = -50;
+%avoid overflow
+
+colored_outputP = uint8(min(255, max(0, double(original_image)+ Pbrightness)));
+colored_outputN = uint8(min(255, max(0, double(original_image)+ Nbrightness)));
+
+% 顯示結果
+figure;
+subplot(1,3,1), imshow(original_image), title('原圖');
+subplot(1,3,2), imshow(colored_outputP), title('調亮');
+subplot(1,3,3), imshow(colored_outputN), title('調暗');
+
+%point bright by channel
+clc;
+clear All;
+close All;
+
+%read original image
+original_image = imread('orange.jpg');
+
+% brightness to each different channels 
+% show each channel
+R = original_image(:,:,1);
+G = original_image(:,:,2);
+B = original_image(:,:,3);
+
+R_new=uint8(min(255, max(0, double(R)+ 50)));
+
+
+% 三個不同 channel -> 整併
+colored_output = cat(3, R_new,G,B);
+
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(original_image), title('原圖');
+subplot(1,2,2), imshow(colored_output), title('調亮R channel');
+
+%point contrast
+clc;
+clear All;
+close All;
+
+%read original image
+original_image = imread('orange.jpg');
+
+contrast = 1.5
+
+img_double = double(original_image);
+enhanced_img = img_double *contrast;
+
+% overflow
+enhanced_img = uint8(min(255, max(0, enhanced_img)));
+
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(original_image), title('原圖');
+subplot(1,2,2), imshow(colored_output), title('調整contrast');
+
+%% Affine translate 
+ 
+% 讀取原始影像
+original_image = imread('flower.jpg');
+% 定義平移參數(x方向移動50像素，y方向移動30像素)
+tx = 50;
+ty = 30;
+% 創建平移矩陣 [ , , ]
+tform = affine2d([1 0 0; 0 1 0; tx ty 1]);
+% 創建一個比原始影像大的輸出視圖，確保能看到平移部分
+[h, w, ~] = size(original_image);
+outputView = imref2d([h+abs(ty)*2, w+abs(tx)*2]);
+outputView.XWorldLimits = outputView.XWorldLimits - tx;
+outputView.YWorldLimits = outputView.YWorldLimits - ty;
+% 應用變換
+outputImg = imwarp(original_image, tform, 'OutputView', outputView);
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(original_image), title('原始影像');
+subplot(1,2,2), imshow(outputImg), title('平移後影像');
+
+%% Affine rotate / change angle
+clc;
+clear all;
+close all;
+% 讀取原始影像
+original_image = imread('flower.jpg');
+% 定義旋轉角度(弧度)
+theta = 45 * (pi/180); % 45度旋轉
+% 旋轉矩陣
+cos_theta = cos(theta);
+sin_theta = sin(theta);
+% tform = affine2d([1 0 0; 0 1 0; tx ty 1]);
+tform = affine2d([cos_theta -sin_theta 0; sin_theta cos_theta 0; 0 0 1]);
+% 應用變換
+outputImg = imwarp(original_image, tform);
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(original_image), title('原始影像');
+subplot(1,2,2), imshow(outputImg), title('旋轉後影像');
+
+%% Power law transformation
+clc;
+clear all;
+close all;
+% 讀取原始影像
+original_image = imread('HDR_Banff.jpeg');
+if size(original_image,3) ==3
+    % color image
+    img_double = im2double(original_image);
+else
+    % gray image
+    img_double = im2double(original_image);
+end
+% give different gamma value
+gamma_value = [0.3, 0.6, 1.1,1.4,2.7];
+n = length(gamma_value);
+figure;
+subplot(1,n+1,1), imshow(img_double), title('原始影像');
+% 根據 gamma value 自動產生每一個不同的 value 的圖片
+for i =1:n
+    gamma =gamma_value(i);
+    corrected_img = img_double.^gamma;
+    % show the pic    
+    subplot(1,n+1,i+1), imshow(corrected_img), title(['\gamma=', num2str(gamma)]);
+end
+
+%% Power law with auto adjustment
+clc;
+clear all;
+close all;
+% 讀取原始影像
+original_image = imread('flower.jpg');
+img_double = im2double(original_image);
+% count average bright
+mean_intensity = mean(img_double(:));
+% 根據 mean_intensity 自動的調整 gamma value
+% 圖片本身很暗 -> 較小的 gamma value
+if mean_intensity <0.4
+    gamma =0.35; %調亮
+elseif mean_intensity >0.7
+    gamma =1.5; %增強過量的影像對比度
+else
+    gamma = 1;
+end
+corrected_img = img_double.^gamma;
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(original_image), title('原始影像');
+%subplot(1,2,2), imshow(corrected_img), title('自動校正');
+subplot(1,2,2), imshow(corrected_img), title(['自動校正 \gamma=', num2str(gamma)]);
+
+%% Power law of partial 
+clc;
+clear all;
+close all;
+
+% 讀取原始影像
+original_image = imread('orange.jpg');
+img_double = im2double(original_image);
+
+% 計算影像的平均亮度
+mean_intensity = mean(img_double(:));
+
+% 把一張圖片切割成許多的網格
+block_size = 64;
+[h, w, c] = size(img_double);
+corrected_img = zeros(size(img_double));
+
+% 一一的對切割後的網格進行適當的gamma adjustment
+for i=1:block_size:h
+    for j=1:block_size:w
+        %定義目前這一塊的範圍
+        row_end =min(i+block_size-1,h);
+        col_end = min(j+block_size-1,w);
+
+        %提取當前的這一塊 
+        block = img_double(i:row_end, j:col_end,:);
+        %計算 block 的平均亮度
+        mean_block = mean(block(:));
+        if mean_block <0.3 
+            gamma = 0.4; %提高暗的影像
+        elseif mean_block <0.5 
+            gamma = 0.7 % 增強過量影像的對比度
+        elseif mean_block <0.7
+            gamma = 1.0;
+        else 
+            gamma = 1.5;
+        end
+
+        % apply power law 
+        corrected_block=block.^gamma;
+
+        % 完成後將校正的結果放回影像中
+        corrected_img(i:row_end, j:col_end,:)=corrected_block;
+    end
+end
+
+% show output
+figure;
+subplot(1,2,1), imshow(img_double), title("Original");
+subplot(1,2,2), imshow(corrected_img), title('Partial Adjusted Gamma');
+
+
+clc;
+clear all;
+close all;
+img = imread('old2.jpg');
+img_double = im2double(img);
+
+% 計算第5百分位和第95百分位
+sorted_pixels = sort(img_double(:));
+num_pixels = numel(sorted_pixels);
+low_idx = round(0.05 * num_pixels);
+high_idx = round(0.95 * num_pixels);
+low_val = sorted_pixels(low_idx);
+high_val = sorted_pixels(high_idx);
+
+% 應用百分位拉伸
+stretched_img = img_double;
+stretched_img(img_double < low_val) = 0;
+stretched_img(img_double > high_val) = 1;
+
+% 線性映射中間區域
+mask = (img_double >= low_val) & (img_double <= high_val);
+stretched_img(mask) = (img_double(mask) - low_val) / (high_val - low_val);
+
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(img_double), title('原始影像');
+subplot(1,2,2), imshow(stretched_img), title('百分位對比度拉伸');
+
+% 分段線性對比度拉伸
+clc;
+clear all;
+
+img = imread('old2.jpg');
+img_double = im2double(img);
+
+% 定義分段線性變換的參數
+r1 = 0.2;  % 輸入下限
+r2 = 0.6;  % 輸入上限
+s1 = 0.0;  % 輸出下限
+s2 = 1.0;  % 輸出上限
+
+% 利用contrast strench
+stretched_img = img_double;
+stretched_img(img_double<r1) = s1; 
+stretched_img(img_double>r2) = s2;
+% 線性映射中間區域 
+mask = (img_double>= r1) &(img_double<=r2);
+stretched_img(mask)=(img_double(mask)-r1)*(s2-s1)/(r2-r1) + s1;
+
+% 顯示結果
+figure;
+subplot(1,2,1), imshow(img_double), title('原始影像');
+subplot(1,2,2), imshow(stretched_img), title('分段線性對比度拉伸');
+
+% 自適應的對比度拉伸 
+clc;
+clear all;
+
+img = imread('old2.jpg');
+img_double = im2double(img);
+
+% 首先進行對比度拉伸
+min_val = min(img_double(:));
+max_val = max(img_double(:));
+stretched_img = (img_double - min_val) / (max_val - min_val);
+
+% 步驟2：伽瑪校正，增強中間調
+gamma = 0.6;
+gamma_corrected = stretched_img.^gamma;
+
+
+% 顯示結果
+figure;
+subplot(1,3,1), imshow(img_double), title('原始影像');
+subplot(1,3,2), imshow(stretched_img), title('對比度拉伸');
+subplot(1,3,3), imshow(gamma_corrected), title('拉伸+Power Law變換');
+
+clc;
+close all;
+clear all;
+
+I = imread('lenna.jpeg');
+
+I_double = double(I);
+
+% create convolution 
+kernel_size =3;
+blur_kernel = ones(kernel_size)/(kernel_size^2);
+%[1,1,1; 1,1,1;1,1,1]
+%[1/9,1/9,1/9; 1/9,1/9,1/9;1/9,1/9,1/9]
+
+kernel02=5;
+blur_kernel02 = ones(kernel02)/(kernel02^2)
+
+% apply kernel 
+I_blurred = conv2(I_double, blur_kernel,'same');
+I_blurred02 = conv2(I_double, blur_kernel02,'same');
+
+I_blurred = uint8(I_blurred);
+I_blurred02 = uint8(I_blurred02);
+
+figure;
+subplot(1,3,1);
+imshow(I);
+title('Original');
+
+subplot(1,3,2);
+imshow(I_blurred);
+title('3*3 Conv2D');
+
+subplot(1,3,3);
+imshow(I_blurred02);
+title('5*5 Conv2D');
+
+% use different shape full same valid
+clc;
+close all;
+clear all;
+
+I = imread('lenna.jpeg');
+
+I_double = double(I);
+% create convolution 
+kernel_size =9;
+blur_kernel = ones(kernel_size)/(kernel_size^2);
+
+% 使用 conv2 進行卷積
+I_blur_same = conv2(I_double, blur_kernel, 'same');
+I_blur_full = conv2(I_double, blur_kernel, 'full');
+I_blur_valid = conv2(I_double, blur_kernel, 'valid');
+
+
+% 顯示結果
+figure;
+subplot(2, 2, 1);
+imshow(uint8(I_double));
+title('原始影像');
+
+subplot(2, 2, 2);
+imshow(uint8(I_blur_same));
+title(sprintf('Same [%dx%d]', size(I_blur_same)));
+
+subplot(2, 2, 3);
+imshow(uint8(I_blur_full));
+title(sprintf('Full [%dx%d]', size(I_blur_full)));
+
+subplot(2, 2, 4);
+imshow(uint8(I_blur_valid));
+title(sprintf('Valid [%dx%d]', size(I_blur_valid)));
+
+crop_size = 50;
+figure;
+subplot(2, 2, 1);
+imshow(uint8(I_double(1:crop_size, 1:crop_size)));
+title('原始影像 (左上角)');
+
+subplot(2, 2, 2);
+imshow(uint8(I_blur_same(1:crop_size, 1:crop_size)));
+title('Same (左上角)');
+
+subplot(2, 2, 3);
+imshow(uint8(I_blur_full(1:crop_size, 1:crop_size)));
+title('Full (左上角，注意擴展)');
+
+subplot(2, 2, 4);
+if size(I_blur_valid, 1) >= crop_size && size(I_blur_valid, 2) >= crop_size
+    imshow(uint8(I_blur_valid(1:crop_size, 1:crop_size)));
+else
+    imshow(uint8(I_blur_valid));
+end
+title('Valid (注意縮小)');
+
+%Noise generater
+clc;
+clear all;
+close all;
+% 讀取影像
+I = imread('lenna.jpeg');
+% 顯示原始圖片
+figure;
+subplot(2, 3, 1);
+imshow(I);
+title('原始圖片');
+% 添加高斯噪聲
+I_gaussian_noise = imnoise(I, 'gaussian', 0, 0.01);
+subplot(2, 3, 2);
+imshow(I_gaussian_noise);
+title('添加高斯噪聲');
+% 添加椒鹽噪聲 (Salt & Pepper)
+I_salt_pepper = imnoise(I, 'salt & pepper', 0.05);
+subplot(2, 3, 3);
+imshow(I_salt_pepper);
+title('添加椒鹽噪聲');
+
+% Denoising
+kernel_size = 3;
+kernel = ones(kernel_size) / (kernel_size^2);
+% mean filter to GAUSSIAN NOISE
+I_double = double(I_gaussian_noise);
+I_mean_filter_gaussian = conv2(I_double, kernel, 'same');
+I_mean_filter_gaussian = uint8(I_mean_filter_gaussian);
+subplot(2, 3, 5);
+imshow(I_mean_filter_gaussian);
+title('高斯噪聲均值濾波結果');
+% TO pepper and salt noise
+I_double = double(I_salt_pepper);
+I_mean_filter_salt_pepper = conv2(I_double, kernel, 'same');
+I_mean_filter_salt_pepper = uint8(I_mean_filter_salt_pepper);
+subplot(2, 3, 6);
+imshow(I_mean_filter_salt_pepper);
+title('P&S噪聲均值濾波結果');
+% try different kernel
+figure;
+window_sizes = [3, 5, 7, 9];
+for i = 1:length(window_sizes)
+    ws = window_sizes(i);
+    kernel = ones(ws) / (ws^2);
+    
+    I_double = double(I_gaussian_noise);
+    filtered = conv2(I_double, kernel, 'same');
+    filtered = uint8(filtered);
+    
+    subplot(2, 2, i);
+    imshow(filtered);
+    title(sprintf('%dx%d 均值濾波器', ws, ws));
+end
+figure;
+subplot(2, 2, 1);
+imshow(I);
+title('原始圖片');
+subplot(2, 2, 2);
+imshow(I_salt_pepper);
+title('椒鹽噪聲');
+subplot(2, 2, 3);
+imshow(I_mean_filter_salt_pepper);
+title('均值濾波');
+% 使用中值濾波處理椒鹽噪聲
+I_median_filter = medfilt2(I_salt_pepper, [3 3]);
+subplot(2, 2, 4);
+imshow(I_median_filter);
+title('中值濾波');
+
+%% noise generator
+clc;
+clear all();
+close all;
+
+% get image
+I = imread('lenna 1.jpeg');
+I_double = im2double(I);
+
+% create a folder for noise images
+if ~exist('noise_images', 'dir')
+    mkdir('noise_images');
+end
+
+imwrite(I, 'noise_images/lenna_original.png');
+
+% 高斯噪聲
+% J = imnoise(I,"gaussian")
+
+% 不同均值和方差的高斯噪聲
+gauss_params = [
+    0, 0.01;   % 均值為0，方差為0.01
+    0, 0.03;   % 均值為0，方差為0.03
+    0, 0.05;   % 均值為0，方差為0.05
+    0.1, 0.01; % 均值為0.1，方差為0.01
+    -0.1, 0.01 % 均值為-0.1，方差為0.01
+];
+
+figure('Name', '高斯噪聲', 'Position', [100, 100, 1200, 400]);
+subplot(2, 6, 1);
+imshow(I_double);
+title('原圖');
+
+for i = 1:size(gauss_params, 1)
+    m = gauss_params(i, 1);
+    var = gauss_params(i, 2);
+    %J = imnoise(I,"gaussian",m,var_gauss)
+    noisy_img=imnoise(I_double,'gaussian',m,var);
+
+    % save the noise image into the folder
+    filename = sprintf('noise_images/lenna_gaussian_m%.1f_var%.2f.png', m, var);
+    imwrite(noisy_img, filename);
+
+    %show pic
+    subplot(2, 6, i+1);
+    imshow(noisy_img);
+    title(sprintf('高斯噪聲 (m=%.1f, var=%.2f)', m, var));
+end
+
+%Poisson noise
+poisson_img = imnoise(I_double, 'poisson');
+subplot(2, 6, 7);
+imshow(poisson_img);
+title('Poisson');
+imwrite(poisson_img, 'noise_images/lenna_poisson.png');
+
+% Salt & pepper noise
+salt_img = imnoise(I_double, 'salt & pepper', 0.1);
+subplot(2, 6, 8);
+imshow(salt_img);
+title('Salt & Pepper');
+imwrite(salt_img, 'noise_images/lenna_saltANDpepper.png');
+
+% Speckle noise with specified variance
+speckle_var = 0.05;
+speckle_img = imnoise(I_double, 'speckle', speckle_var);
+subplot(2, 6, 9);
+imshow(speckle_img);
+title(sprintf('Speckle (var=%.2f)', speckle_var));
+imwrite(speckle_img, 'noise_images/lenna_speckle.png');
+
+% Combined Poisson + Speckle noise
+speckleANDpoisson = imnoise(poisson_img, 'speckle', speckle_var);
+subplot(2, 6, 10);
+imshow(speckleANDpoisson);
+title('Poisson + Speckle');
+imwrite(speckleANDpoisson, 'noise_images/lenna_speckleANDpoisson.png');
+
+clc;
+clear all;
+close all;
+
+image = imread('lenna 1.jpeg');
+lap_filter = [0 1 0; 1 -4 1; 0 1 0];
+
+lap_image = imfilter(image, lap_filter, 'replicate');
+
+%lambda
+lambda = 0.5;
+% 銳化
+sharp_image = image - lambda*lap_image;
+figure;
+subplot(1,3,1), imshow(image), title('Original');
+subplot(1,3,2), imshow(lap_image), title('Laplician');
+subplot(1,3,3), imshow(sharp_image), title('Sharp Processing');
+
+%觀察數值
+clc; clear all; close all;
+image = imread('smooth_image.png');
+image_gray = double(image);
+disp(['Original', class(image_gray)]);
+disp(['Original Range from', num2str(double(min(image_gray(:)))), ' to ', num2str(double(max(image_gray(:))))]);
+% 拉普拉斯濾波器
+laplacian_filter = [0 1 0; 1 -4 1; 0 1 0];
+%uint8
+laplacian_image = imfilter(image_gray, laplacian_filter, 'replicate');
+% check laplacian range
+disp(['Laplacian', class(laplacian_image)]);
+disp(['Laplacian range from ', num2str(double(min(laplacian_image(:)))), ' to ', num2str(double(max(laplacian_image(:))))]);
+%method 1 under uint8
+lambda = 0.5;
+sharpened_uint8 = uint8(double(image_gray) - lambda * double(laplacian_image));
+% method 2 using double
+image_gray_double = im2double(image_gray);
+laplacian_double = imfilter(image_gray_double, laplacian_filter, 'replicate');
+disp(['Transfer to double ', num2str(min(laplacian_double(:))), ' to ', num2str(max(laplacian_double(:)))]);
+lambda_double = 0.5;
+sharpened_double = image_gray_double - lambda_double * laplacian_double;
+% 確保像素值在有效範圍內
+sharpened_double = min(max(sharpened_double, 0), 1);
+% 顯示結果
+figure;
+subplot(2,2,1), imshow(image), title('Original');
+subplot(2,2,2), imshow(laplacian_image, []), title('Lap');
+subplot(2,2,3), imshow(sharpened_uint8), title(['uint8 λ = ', num2str(lambda)]);
+subplot(2,2,4), imshow(sharpened_double), title(['double λ = ', num2str(lambda_double)]);
+
+%% generate a new picture which is more blur smooth
+clc; 
+clear all;
+close all;
+
+image = imread('lenna 1.jpeg');
+
+image = double(image);
+
+%generate Smooth image here we use Guass
+h_size = 5;
+sigma = 2;
+h_smooth = fspecial('gaussian',[h_size h_size],sigma);
+smooth_img = imfilter(image, h_smooth, 'replicate');
+imwrite(uint8(smooth_img), fullfile('smooth_image.png'));
+figure;
+subplot(1,2,1), imshow(uint8(image)), title('Original');
+subplot(1,2,2), imshow(uint8(smooth_img)), title('Smooth Image');
+
+clear; clc; close all;
+I=imread('lenna 1.jpeg');
+smooth_img = imread('smooth_image.png');
+I_double=double(I);
+smooth_img = double(smooth_img);
+high_boost_filter = [
+    -1, -1, -1;
+    -1,  8, -1;
+    -1, -1, -1
+];
+edge_Oimg = imfilter(I_double, high_boost_filter, 'replicate');
+edge_Simg = imfilter(smooth_img, high_boost_filter, 'replicate');
+% normalization
+edge_Oimg = abs(edge_Oimg);
+edge_Oimg = edge_Oimg / max(edge_Oimg(:)) * 255;
+edge_Simg = abs(edge_Simg);
+edge_Simg = edge_Simg / max(edge_Simg(:)) * 255;
+subplot(2, 2, 1);
+imshow(uint8(I_double));
+title('Origin');
+subplot(2, 2, 3);
+imshow(uint8(smooth_img));
+title('Smooth');
+subplot(2, 2, 2);
+imshow(uint8(edge_Oimg));
+title('Origin Edge');
+subplot(2, 2, 4);
+imshow(uint8(edge_Simg));
+title('Smooth Edge');
+
+% Sobel 
+clear all; close all; clc;
+img = imread('smooth_image.png');
+img = double(img);
+sobel_x = [-1 0 1; -2 0 2; -1 0 1];
+sobel_y = [-1 -2 -1; 0 0 0; 1 2 1];
+gradient_x = imfilter(img, sobel_x, 'replicate'); % 水平梯度
+gradient_y = imfilter(img, sobel_y, 'replicate'); % 垂直梯度
+gradient_magnitude = sqrt(gradient_x.^2 + gradient_y.^2);
+%normalization
+gradient_magnitude = gradient_magnitude / max(gradient_magnitude(:)) * 255;
+gradient_direction = atan2(gradient_y, gradient_x);
+subplot(1, 4, 1);
+imshow(uint8(img));
+title('Original');
+subplot(1, 4, 2);
+imshow(uint8(abs(gradient_x)));
+title('水平梯度 (Sobel_x)');
+subplot(1, 4, 3);
+imshow(uint8(abs(gradient_y)));
+title('垂直梯度 (Sobel_y)');
+subplot(1, 4, 4);
+imshow(uint8(gradient_magnitude));
+title('Gradient');
+%
+figure('Name', 'Sobel enforcement result');
+threshold = 40;  
+binary_edge = gradient_magnitude > threshold;
+binary_edge = imdilate(binary_edge, strel('disk', 1));
+%將照片 edge 疊加回圖片中
+alpha = 0.3;
+normalized_gradient = gradient_magnitude / max(gradient_magnitude(:));
+enhanced_direct = img + alpha * img .* normalized_gradient;
+enhanced_direct = max(0, min(255, enhanced_direct));
+subplot(2, 2, 1);
+imshow(uint8(img));
+title('Original');
+subplot(2, 2, 2);
+imshow(uint8(enhanced_direct));
+title('Sobel');
+
+% Canny Edge detection
+clear all; close all; clc;
+img = imread('smooth_image.png');
+ 
+edges = edge(img, 'canny');
+ 
+edge_enhanced = double(img);  
+%edge_enhanced(edges) = 255;   % edge become white
+edge_enhanced = uint8(edge_enhanced);
+subplot(1, 3, 1);
+imshow(img);
+title('Oringinal');
+subplot(1, 3, 2);
+imshow(edges);
+title('Canny edge detection');
+subplot(1, 3, 3);
+imshow(edge_enhanced);
+title('Edge map to image');
+
+%% 膨脹示範
+clc;
+clear all;
+close all;
+
+figure('Name', '膨脹操作示範');
+
+% subplot 1
+subplot(3, 4, 1);
+BW = false(200,200);
+BW(50 : 150, 50 : 150) = true; % square
+BW(90 : 110, 30 : 170) = true; % horizontal
+BW(30 : 170, 90 : 110) = true; % vertical
+
+imshow(BW);
+title('原始二值影像');
+
+%create a 3*3 square
+subplot(3, 4, 2);
+sel = strel('square', 3);
+BW_dil1 = imdilate(BW, sel);
+imshow(BW_dil1);
+title('3x3方形SE 膨脹');
+
+% create a 7*7 sqare
+subplot(3,4,3);
+sel = strel('square', 7);
+BW_dil2 = imdilate(BW, sel);
+imshow(BW_dil2);
+title('7x7方形SE 膨脹');
+
+% create a 15*15 sqare
+subplot(3,4,4);
+sel = strel('square', 15);
+BW_dil3 = imdilate(BW, sel);
+imshow(BW_dil3);
+title('15x15方形SE 膨脹');
+
+% 使用圓形結構元素
+subplot(3,4,5);
+se_disk1 = strel('disk',5);
+BW_dil_disk1 = imdilate(BW, se_disk1);
+imshow(BW_dil_disk1);
+title('圓形SE膨脹');
+
+subplot(3,4,6);
+se_disk2 = strel('disk',15);
+BW_dil_disk2 = imdilate(BW, se_disk2);
+imshow(BW_dil_disk2);
+title('圓形 r=15 SE膨脹');
+
+
+% 使用線型結構元素 (水平)
+subplot(3,4,7);
+se_line1 = strel('line', 10, 0);
+BW_dil_l1 = imdilate(BW, se_line1);
+imshow(BW_dil_l1);
+title('水平線SE膨脹');
+
+% 使用線型結構元素 (垂直)
+subplot(3,4,8);
+se_line2 = strel('line', 10, 90);
+BW_dil_l2 = imdilate(BW, se_line2);
+imshow(BW_dil_l2);
+title('垂直線SE膨脹');
+
+
+%% 利用上述的各種不同 SE 套用在需要被修復的物體上
+% 2.套用在案例上
+% 2.1 套用在
+
+figure('Name', '膨脹操作示範');
+subplot(3,3,1);
+broken = false(200, 200);
+broken(90:110, 30:85) = true;   % 左段水平線
+broken(90:110, 115:170) = true; % 右段水平線
+
+imshow(broken);
+title('斷開的線條');
+
+% fix the broken line
+subplot(3,3,2);
+se_repair1 = strel('disk', 5);
+repaired1 = imdilate(broken,se_repair1);
+imshow(repaired1);
+title('dilation with disk r=5');
+
+% fix the broken line
+subplot(3,3,3);
+se_repair2 = strel('disk', 15);
+repaired2 = imdilate(broken,se_repair2);
+imshow(repaired2);
+title('dilation with disk r=15');
+
+clc;
+clear all;
+close all;
+
+%applied onto real picture
+
+figure('Name', '膨脹修復破損物體', 'Position', [100, 100, 1000, 400]);
+
+% load the rice.png
+J = imread('rice.png');
+subplot(2, 4, 1);
+imshow(J);
+title('原始米粒影像');
+
+%binary
+BW_rice = imbinarize(J);
+subplot(2, 4, 2);
+imshow(BW_rice);
+title('二值化後的米粒');
+
+% risk = 3;
+se2 = strel('disk', 3);
+BW_rice_repair = imdilate(BW_rice, se2);
+subplot(2, 4, 3);
+imshow(BW_rice_repair);
+title('用 disk 修復rice.png');
+
+subplot(2, 4, 4);
+imshowpair(BW_rice, BW_rice_repair, 'montage');
+title('Before VS After');
+
+% Fit onto the original image
+subplot(2, 4, 5);
+overlay_repaired = labeloverlay(J,BW_rice_repair,'Transparency',0.6,"Colormap",[0 1 0]);
+imshow(overlay_repaired);
+title('Fit onto the original');
+
+% 計數未處理前圖像中的米粒個數
+[labeled_orig, num_objects_orig] = bwlabel(BW_rice);
+subplot(2, 4, 6);
+imshow(label2rgb(labeled_orig, 'jet', 'k', 'shuffle'));
+title(['before dilation: ' num2str(num_objects_orig) ' 個物體']);
+% 計數處理後圖像中的米粒個數
+[labeled_orig, num_objects_orig] = bwlabel(BW_rice_repair);
+subplot(2, 4, 7);
+imshow(label2rgb(labeled_orig, 'jet', 'k', 'shuffle'));
+title(['After dilation: ' num2str(num_objects_orig) ' 個物體']);
+
+clc;
+clear all;
+close all;
+
+figure('Name', '膨脹VS侵蝕 : OR vs AND', 'Position', [100, 100, 900, 600]);
+BW = false(200, 200);
+BW(50 : 150, 50 : 150) = true; % square
+BW(90 : 110, 30 : 170) = true; % horizontal
+BW(30 : 170, 90 : 110) = true; % vertical
+
+% 在正方形內加入一些小孔洞
+BW(70:80, 70:80) = false;
+BW(120:130, 120:130) = false;
+subplot(2, 3, 1);
+imshow(BW);
+title('原始二值影像');
+se = strel('square', 3);
+
+% dilation
+dilated = imdilate(BW, se);
+subplot(2, 3, 2);
+imshow(dilated);
+title('Dilation');
+
+% erosion
+eroded = imerode(BW, se);
+subplot(2, 3, 3);
+imshow(eroded);
+title('Erotion');
+
+clc;
+clear all;
+close all;
+
+% load the picture
+J = imread(['damaged_text.png']);
+subplot(1, 2, 1);
+imshow(J);
+title('Original');
+
+% erosion
+se = strel('square', 2);
+eroded = imerode(J, se);
+
+% 線型結構元素 (水平 + 垂直)
+se_line1 = strel('line', 4, 0);
+BW_dil_l1 = imdilate(eroded, se_line1);
+
+se_line2 = strel('line', 4, 90);
+BW_text_repair = imdilate(BW_dil_l1, se_line2);
+
+subplot(1, 2, 2);
+imshow(BW_text_repair);
+title('erosion + dilation in vertical and horizontal lines');
+
+output_name = sprintf('S11159020_repaired.jpg');
+imwrite(BW_text_repair, output_name);
+
+%% using dilation and erosion on texting feature recognization
+
+figure('Name','文字辨識中的膨脹應用', 'Position', [100, 100, 1000, 800]);
+
+% text gen
+text_img = false(300,1000);
+img_rgb = cat(3, text_img, text_img, text_img);
+img_rgb = uint8(img_rgb * 255);
+img_rgb = insertText(img_rgb, [50, 100], 'Computer Vision', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+img_rgb = insertText(img_rgb, [50, 200], 'Text Recognition', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+% to binary
+text_img = rgb2gray(img_rgb) >0;
+% show Original
+subplot(3, 3, 1);
+imshow(text_img);
+title('原始文字影像');
+
+% simulate with noise and destory
+% salt and pepper
+noise_salt = rand(size(text_img)) > 0.995;  % add white noise
+noise_pepper = rand(size(text_img)) > 0.9;  % add black noise
+
+% simulate the words with break
+random_breaks = rand(size(text_img)) > 0.02;
+% add noise and break into the original pic
+text_damaged = (text_img | noise_salt) & random_breaks;
+text_damaged(text_img & noise_pepper) = false;
+% 顯示損壞的文字影像
+subplot(3, 3, 2);
+imshow(text_damaged);
+title('損壞的文字影像 (有噪聲和斷裂)');
+
+% Dilation and Erotion
+% SE
+% dilation : imdilate(text_damaged, SE)
+subplot(3, 3, 3);
+sel = strel('square', 3);
+text_damaged_dil1 = imdilate(text_damaged, sel);
+imshow(text_damaged_dil1);
+title('3x3方形SE 膨脹');
+
+subplot(3,3,4);
+se_disk1 = strel('disk',1);
+text_damaged_disk1 = imdilate(text_damaged, se_disk1);
+imshow(text_damaged_disk1);
+title('圓形SE r=1 膨脹');
+
+subplot(3,3,5);
+se_disk2 = strel('disk',5);
+text_damaged_disk2 = imdilate(text_damaged, se_disk2);
+imshow(text_damaged_disk2);
+title('圓形SE r=5 膨脹');
+
+% Erotion : imerote(text_damaged, SE)
+se = strel('square', 3);
+eroded = imerode(text_damaged, se);
+subplot(3, 3, 6);
+imshow(eroded);
+title('方形 3*3 縮小');
+
+
+% 使用 open 的作法
+clc; 
+close all; 
+clear all;
+% gen broken text image
+text_img = false(300, 1000);
+img_rgb = cat(3, text_img, text_img, text_img);
+img_rgb = uint8(img_rgb * 255);
+img_rgb = insertText(img_rgb, [50, 100], 'Computer Vision', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+img_rgb = insertText(img_rgb, [50, 200], 'Text Recognition', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+text_img = rgb2gray(img_rgb) > 0;
+% 顯示原始文字影像
+subplot(3, 3, 1);
+imshow(text_img);
+title('原始文字影像');
+% gen noise and destroy
+noise_salt = rand(size(text_img)) > 0.995;
+noise_pepper = rand(size(text_img)) > 0.9;
+random_breaks = rand(size(text_img)) > 0.02;
+text_damaged = (text_img | noise_salt) & random_breaks;
+text_damaged(text_img & noise_pepper) = false;
+% 顯示損壞的文字影像
+subplot(3, 3, 2);
+imshow(text_damaged);
+title('損壞的文字影像 (有噪聲和斷裂)');
+
+%SE
+se = strel('disk', 3);
+%open operating (erosion then dilation)
+opened_image=imopen(text_damaged,se);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se);
+dilate_image = imdilate(text_damaged,se);
+subplot(3, 3, 4);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 5);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 6);
+imshow(opened_image);
+title('Open Operation');
+
+se_s = strel('square', 1);
+%open operating (erosion then dilation)
+opened_image=imopen(text_damaged,se_s);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se_s);
+dilate_image = imdilate(text_damaged,se_s);
+subplot(3, 3, 7);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 8);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 9);
+imshow(opened_image);
+title('Open Operation');
+
+
+% 使用 open 的作法
+clc; 
+close all; 
+clear all;
+% gen broken text image
+text_img = false(300, 1000);
+img_rgb = cat(3, text_img, text_img, text_img);
+img_rgb = uint8(img_rgb * 255);
+img_rgb = insertText(img_rgb, [50, 100], 'Computer Vision', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+img_rgb = insertText(img_rgb, [50, 200], 'Text Recognition', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'white');
+text_img = rgb2gray(img_rgb) > 0;
+% 顯示原始文字影像
+subplot(3, 3, 1);
+imshow(text_img);
+title('原始文字影像');
+% gen noise and destroy
+noise_salt = rand(size(text_img)) > 0.995;
+noise_pepper = rand(size(text_img)) > 0.9;
+random_breaks = rand(size(text_img)) > 0.02;
+text_damaged = (text_img | noise_salt) & random_breaks;
+text_damaged(text_img & noise_pepper) = false;
+% 顯示損壞的文字影像
+subplot(3, 3, 2);
+imshow(text_damaged);
+title('損壞的文字影像 (有噪聲和斷裂)');
+
+%SE
+se = strel('disk', 3);
+%open operating (erosion then dilation)
+closed_image=imclose(text_damaged,se);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se);
+dilate_image = imdilate(text_damaged,se);
+subplot(3, 3, 4);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 5);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 6);
+imshow(closed_image);
+title('Close Operation');
+
+se_s = strel('square', 1);
+%open operating (erosion then dilation)
+closed_image=imclose(text_damaged,se_s);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se_s);
+dilate_image = imdilate(text_damaged,se_s);
+subplot(3, 3, 7);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 8);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 9);
+imshow(closed_image);
+title('Close Operation');
+
+
+clc; 
+close all; 
+clear all;
+% gen broken text image
+%text_img = false(300, 1000);
+text_img = true(300, 1000);
+img_rgb = cat(3, text_img, text_img, text_img);
+img_rgb = uint8(img_rgb * 255);
+img_rgb = insertText(img_rgb, [50, 100], 'Computer Vision', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'black');
+img_rgb = insertText(img_rgb, [50, 200], 'Text Recognition', 'FontSize', 60, 'BoxOpacity', 0, 'TextColor', 'black');
+text_img = rgb2gray(img_rgb) > 0;
+
+% 顯示原始文字影像
+subplot(3, 3, 1);
+imshow(text_img);
+title('原始文字影像');
+% gen noise and destroy
+noise_salt = rand(size(text_img)) > 0.995;
+noise_pepper = rand(size(text_img)) > 0.9;
+random_breaks = rand(size(text_img)) > 0.02;
+text_damaged = (text_img | noise_salt) & random_breaks;
+text_damaged(text_img & noise_pepper) = false;
+% 顯示損壞的文字影像
+subplot(3, 3, 2);
+imshow(text_damaged);
+title('損壞的文字影像 (有噪聲和斷裂)');
+
+%SE
+se = strel('disk', 3);
+%open operating (erosion then dilation)
+opened_image=imopen(text_damaged,se);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se);
+dilate_image = imdilate(text_damaged,se);
+subplot(3, 3, 4);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 5);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 6);
+imshow(opened_image);
+title('Open Operation');
+
+se_s = strel('square', 1);
+%open operating (erosion then dilation)
+opened_image=imopen(text_damaged,se_s);
+
+% only dilation or only erosion
+erode_image = imerode(text_damaged,se_s);
+dilate_image = imdilate(text_damaged,se_s);
+subplot(3, 3, 7);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(3, 3, 8);
+imshow(erode_image);
+title('Erode Operation');
+subplot(3, 3, 9);
+imshow(opened_image);
+title('Open Operation');
+
+
+clc; 
+close all; 
+clear all;
+
+
+J = imread(['finger.png']);
+% SE : Square r = 2
+se = strel('square', 2);
+se_line1 = strel('line', 4, 0);
+
+%open operating (erosion then dilation)
+opened_image=imopen(J,se_line1);
+closed_image = imclose(J,se_line1);
+
+% opening
+erode_image = imerode(J,se_line1);
+dilate_image = imdilate(J,se_line1);
+subplot(4, 2, 1);
+imshow(dilate_image);
+title('Dilation operation');
+subplot(4, 2, 2);
+imshow(erode_image);
+title('Erode Operation');
+subplot(4, 2, 3);
+imshow(opened_image);
+title('Open Operation');
+% closing
+subplot(4, 2, 4);
+imshow(closed_image);
+title('Close Operation');
+
+dilate_square_image = imdilate(opened_image,se);
+subplot(4, 2, 5);
+imshow(dilate_square_image);
+title('Diliation after opening');
+
+
+output_name = sprintf('S11159020.jpg');
+imwrite(dilate_square_image, output_name);
+
+
+%use coin as our sample
+I = imread('coins.png');
+I_gray = im2gray(I);
+
+%set a threshold
+V_threshold = 100;
+BW_simple = I_gray > V_threshold;
+
+%adaptive threshold
+BW_adapt = adaptthresh(I_gray, 0.5);
+BW_adapt = imbinarize(I_gray, BW_adapt);
+
+% Otsu Method
+level = graythresh(I_gray);
+BW_otsu = imbinarize(I_gray,level);
+
+figure;
+subplot(2,2,1); imshow(I_gray); title('Original');
+subplot(2,2,2); imshow(BW_simple); title('SimpleT');
+subplot(2,2,3); imshow(BW_adapt); title('AdaptT');
+subplot(2,2,4); imshow(BW_otsu); title('Otsu');
+
+I = imread('cameraman.tif');
+
+%how many threshold
+m = multithresh(I, 2); % threshold m1 = 100, m2 = 175 0-99, 100-174, 174-255
+q = imquantize(I, m); % separate into several levels
+r = label2rgb(q); % 用彩色的顏色將圖片分類
+
+figure;
+subplot(1, 3, 1); imshow(I); title('Origial');
+subplot(1, 3, 2); imshow(q, []); title('MultiQuntize');
+subplot(1, 3, 3); imshow(r); title('Color labeling');
